@@ -8,6 +8,7 @@ import { viteMockServe } from 'vite-plugin-mock'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import compressPlugin from 'vite-plugin-compression'
+import { createStyleImportPlugin, VantResolve } from 'vite-plugin-style-import'
 
 const { dependencies, devDependencies, name, version } = pkg
 
@@ -96,7 +97,8 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const vitePlugins: (Plugin | Plugin[] | PluginOption | PluginOption[])[] = [
     // have to
     vue(),
-    vueJsx()
+    vueJsx(),
+    createStyleImportPlugin({ resolves: [VantResolve()] })
   ]
 
   // vite-plugin-html

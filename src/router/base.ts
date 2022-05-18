@@ -5,6 +5,7 @@ export const RootRoute: AppRouteRecordRaw = {
   path: '/',
   name: 'Root',
   component: AppLayout,
+  redirect: '/home',
   meta: {
     title: 'Root',
     type: MenuType.DIR
