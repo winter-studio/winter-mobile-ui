@@ -40,7 +40,7 @@ module.exports = {
         comments: 100,
         ignoreComments: false,
         ignoreTrailingComments: false,
-        ignoreStrings: false,
+        ignoreStrings: true,
         ignoreTemplateLiterals: false,
         ignoreRegExpLiterals: false
       }
@@ -78,7 +78,7 @@ module.exports = {
         comments: 100,
         ignoreComments: false,
         ignoreTrailingComments: false,
-        ignoreStrings: false,
+        ignoreStrings: true,
         ignoreTemplateLiterals: false,
         ignoreRegExpLiterals: false,
         ignoreHTMLAttributeValues: false,

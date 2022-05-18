@@ -1,7 +1,45 @@
 import { App } from 'vue'
-import { Tabbar, TabbarItem } from 'vant'
+import {
+  Button,
+  List,
+  Cell,
+  Tabbar,
+  TabbarItem,
+  Swipe,
+  SwipeItem,
+  Grid,
+  GridItem,
+  NavBar,
+  Icon,
+  Sticky,
+  Card,
+  Sidebar,
+  SidebarItem
+} from 'vant'
 
-export function setupVant(app: App<Element>) {
-  app.use(Tabbar)
-  app.use(TabbarItem)
+const plugins = [
+  Button,
+  List,
+  Cell,
+  Tabbar,
+  TabbarItem,
+  Swipe,
+  SwipeItem,
+  Grid,
+  GridItem,
+  NavBar,
+  Icon,
+  Sticky,
+  Card,
+  Sidebar,
+  SidebarItem
+]
+
+export default {
+  install: function (app: App) {
+    plugins.forEach((item) => {
+      // app.component(item.name, item);
+      app.use(item)
+    })
+  }
 }

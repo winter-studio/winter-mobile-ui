@@ -1,18 +1,18 @@
 <template>
-  <div>layout</div>
   <router-view />
-  <van-tabbar v-model="active">
-    <van-tabbar-item icon="home-o">标签</van-tabbar-item>
-    <van-tabbar-item icon="search">标签</van-tabbar-item>
-    <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
-    <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
+  <van-tabbar ref="tabbarRef" route>
+    <van-tabbar-item to="/home" icon="home-o">首页</van-tabbar-item>
+    <van-tabbar-item to="/catalogue" icon="search">分类</van-tabbar-item>
+    <van-tabbar-item to="/message" icon="friends-o">消息</van-tabbar-item>
+    <van-tabbar-item to="/me" icon="setting-o">我的</van-tabbar-item>
   </van-tabbar>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { Tabbar } from 'vant'
 
-const active = ref(0)
+const tabbarRef = ref<InstanceType<typeof Tabbar>>()
 </script>
 
 <style scoped></style>

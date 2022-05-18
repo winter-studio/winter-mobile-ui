@@ -1,47 +1,34 @@
 import { ErrorPage, AppLayout } from '@/router/constant'
-import { AppRouteRecordRaw, MenuType } from '@/router/types'
+import modules from './modules'
+import { RouteRecordRaw } from 'vue-router'
 
-export const RootRoute: AppRouteRecordRaw = {
+export const RootRoute: RouteRecordRaw = {
   path: '/',
   name: 'Root',
   component: AppLayout,
   redirect: '/home',
   meta: {
-    title: 'Root',
-    type: MenuType.DIR
+    title: 'Root'
   },
-  children: [
-    {
-      path: 'home',
-      name: 'Home',
-      component: () => import('@/views/basic/Home.vue'),
-      meta: {
-        title: 'Home',
-        type: MenuType.VIEW
-      }
-    }
-  ]
+  children: [...modules]
 }
 
-export const LoginRoute: AppRouteRecordRaw = {
+export const LoginRoute: RouteRecordRaw = {
   path: '/login',
   name: 'Login',
   component: () => import('@/views/basic/Login.vue'),
   meta: {
-    title: '登录',
-    type: MenuType.VIEW
+    title: '登录'
   }
 }
 
 // 404 on a page
-export const ErrorPageRoute: AppRouteRecordRaw = {
+export const ErrorPageRoute: RouteRecordRaw = {
   path: '/:path(.*)*',
   name: 'ErrorPage',
   component: AppLayout,
   meta: {
-    title: 'ErrorPage',
-    hideBreadcrumb: true,
-    type: MenuType.VIEW
+    title: 'ErrorPage'
   },
   children: [
     {
@@ -49,13 +36,11 @@ export const ErrorPageRoute: AppRouteRecordRaw = {
       name: 'ErrorPageSon',
       component: ErrorPage,
       meta: {
-        title: 'ErrorPage',
-        hideBreadcrumb: true,
-        type: MenuType.VIEW
+        title: '错误'
       }
     }
   ]
 }
 
 //普通路由 无需验证权限
-export const constantRouter: AppRouteRecordRaw[] = [LoginRoute, RootRoute, ErrorPageRoute]
+export const constantRouter: RouteRecordRaw[] = [LoginRoute, RootRoute, ErrorPageRoute]

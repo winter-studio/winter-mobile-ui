@@ -4,10 +4,10 @@ import router from './router/index'
 import store from './store'
 
 import './styles/tailwind.css'
-import { setupVant } from '@/plugin/vant'
+import vant from '@/plugin/vant'
 
 const app = createApp(App)
-setupVant(app)
+app.use(vant)
 // 挂载状态管理
 app.use(store)
 // 挂载路由
