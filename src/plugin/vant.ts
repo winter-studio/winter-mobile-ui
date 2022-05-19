@@ -1,4 +1,5 @@
 import { App } from 'vue'
+import '@vant/touch-emulator'
 import {
   Button,
   List,

@@ -58,7 +58,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       }
     },
     optimizeDeps: {
-      include: [],
+      include: ['vant', '@vant/touch-emulator'],
       exclude: ['vue-demi']
     },
     build: {
