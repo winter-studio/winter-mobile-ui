@@ -1,46 +1,9 @@
-import { App } from 'vue'
+import type { App } from 'vue'
 import '@vant/touch-emulator'
-import {
-  Button,
-  List,
-  Cell,
-  Tabbar,
-  TabbarItem,
-  Swipe,
-  SwipeItem,
-  Grid,
-  GridItem,
-  NavBar,
-  Icon,
-  Sticky,
-  Card,
-  Sidebar,
-  SidebarItem
-} from 'vant'
+import 'vant/lib/index.css'
 
-const plugins = [
-  Button,
-  List,
-  Cell,
-  Tabbar,
-  TabbarItem,
-  Swipe,
-  SwipeItem,
-  Grid,
-  GridItem,
-  NavBar,
-  Icon,
-  Sticky,
-  Card,
-  Sidebar,
-  SidebarItem
-]
+import { Lazyload } from 'vant'
 
-export default {
-  install: function (app: App) {
-    plugins.forEach((item) => {
-      // app.component(item.name, item);
-      app.use(item)
-    })
-  }
+export const setupVant = (app: App) => {
+  app.use(Lazyload)
 }

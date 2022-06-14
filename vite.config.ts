@@ -4,16 +4,15 @@ import { resolve } from 'path'
 import pkg from './package.json'
 import { format } from 'date-fns'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import { viteMockServe } from 'vite-plugin-mock'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import compressPlugin from 'vite-plugin-compression'
-import { createStyleImportPlugin, VantResolve } from 'vite-plugin-style-import'
+// eslint-disable-next-line import/no-unresolved
+import Components from 'unplugin-vue-components/vite'
+// eslint-disable-next-line import/no-unresolved
+import { VantResolver } from 'unplugin-vue-components/resolvers'
 
 const { dependencies, devDependencies, name, version } = pkg
-
-export const GLOB_CONFIG_FILE_NAME = 'app.config.js'
-export const OUTPUT_DIR = 'dist'
 
 const __APP_INFO__ = {
   pkg: { dependencies, devDependencies, name, version },
@@ -63,7 +62,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
     build: {
       target: 'es2015',
-      outDir: OUTPUT_DIR,
+      outDir: 'dist',
       minify: 'terser',
       terserOptions: {
         compress: {
@@ -98,14 +97,13 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     // have to
     vue(),
     vueJsx(),
-    createStyleImportPlugin({ resolves: [VantResolve()] })
+    Components({
+      resolvers: [VantResolver()]
+    })
   ]
 
   // vite-plugin-html
-  vitePlugins.push(configHtmlPlugin(viteEnv, isBuild))
-
-  // vite-plugin-mock
-  viteEnv.VITE_USE_MOCK && vitePlugins.push(configMockPlugin(isBuild))
+  vitePlugins.push(configHtmlPlugin(viteEnv))
 
   if (isBuild) {
     // rollup-plugin-gzip
@@ -120,49 +118,16 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   return vitePlugins
 }
 
-export function configHtmlPlugin(env: ViteEnv, isBuild: boolean) {
-  const { VITE_APP_TITLE, VITE_PUBLIC_PATH } = env
+export function configHtmlPlugin(env: ViteEnv) {
+  const { VITE_APP_TITLE } = env
 
-  const path = VITE_PUBLIC_PATH.endsWith('/') ? VITE_PUBLIC_PATH : `${VITE_PUBLIC_PATH}/`
-
-  const getAppConfigSrc = () => {
-    return `${path || '/'}${GLOB_CONFIG_FILE_NAME}?v=${pkg.version}-${new Date().getTime()}`
-  }
-
-  const htmlPlugin: PluginOption[] = createHtmlPlugin({
+  return createHtmlPlugin({
     inject: {
       // Inject data into ejs template
       data: {
         title: VITE_APP_TITLE
-      },
-      // Embed the generated app.config.js file
-      tags: isBuild
-        ? [
-            {
-              tag: 'script',
-              attrs: {
-                src: getAppConfigSrc()
-              }
-            }
-          ]
-        : []
+      }
     }
-  })
-
-  return htmlPlugin
-}
-
-export function configMockPlugin(isBuild: boolean) {
-  return viteMockServe({
-    ignore: /^\_/,
-    mockPath: 'mock',
-    localEnabled: !isBuild,
-    prodEnabled: isBuild,
-    injectCode: `
-      import { setupProdMockServer } from '../mock/_createProductionServer';
-
-      setupProdMockServer();
-      `
   })
 }
 

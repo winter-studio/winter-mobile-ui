@@ -14,51 +14,47 @@ export interface ApiResponse<T = any> {
 }
 
 export interface ProxyAxiosRequestConfig<D = any> extends AxiosRequestConfig<D> {
-  rawResponse?: boolean
+  handleSuccess?: boolean
+  handleFailure?: boolean
+  handleError?: boolean
 }
 
-export interface ProxyAxiosResponse<T = any, D = any> extends AxiosResponse<T, D> {
+export interface ProxyAxiosResponse<T = ApiResponse, D = any> extends AxiosResponse<T, D> {
   config: ProxyAxiosRequestConfig<D>
 }
 
 export interface ProxyAxiosInstance extends AxiosInstance {
-  request<T = any, R = AxiosResponse<T>, D = any>(config: ProxyAxiosRequestConfig<D>): Promise<R>
+  request<S = any, T = ApiResponse<S>, D = any>(config: ProxyAxiosRequestConfig<D>): Promise<T>
 
-  get<T = any, R = AxiosResponse<T>, D = any>(
+  get<S = any, T = ApiResponse<S>, D = any>(
     url: string,
     config?: ProxyAxiosRequestConfig<D>
-  ): Promise<R>
-
-  delete<T = any, R = AxiosResponse<T>, D = any>(
+  ): Promise<T>
+  delete<S = any, T = ApiResponse<S>, D = any>(
     url: string,
     config?: ProxyAxiosRequestConfig<D>
-  ): Promise<R>
-
-  head<T = any, R = AxiosResponse<T>, D = any>(
+  ): Promise<T>
+  head<S = any, T = ApiResponse<S>, D = any>(
     url: string,
     config?: ProxyAxiosRequestConfig<D>
-  ): Promise<R>
-
-  options<T = any, R = AxiosResponse<T>, D = any>(
+  ): Promise<T>
+  options<S = any, T = ApiResponse<S>, D = any>(
     url: string,
     config?: ProxyAxiosRequestConfig<D>
-  ): Promise<R>
-
-  post<T = any, R = AxiosResponse<T>, D = any>(
+  ): Promise<T>
+  post<S = any, T = ApiResponse<S>, D = any>(
     url: string,
     data?: D,
     config?: ProxyAxiosRequestConfig<D>
-  ): Promise<R>
-
-  put<T = any, R = AxiosResponse<T>, D = any>(
+  ): Promise<T>
+  put<S = any, T = ApiResponse<S>, D = any>(
     url: string,
     data?: D,
     config?: ProxyAxiosRequestConfig<D>
-  ): Promise<R>
-
-  patch<T = any, R = AxiosResponse<T>, D = any>(
+  ): Promise<T>
+  patch<S = any, T = ApiResponse<S>, D = any>(
     url: string,
     data?: D,
     config?: ProxyAxiosRequestConfig<D>
-  ): Promise<R>
+  ): Promise<T>
 }
