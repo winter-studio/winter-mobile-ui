@@ -1,6 +1,7 @@
 import { ErrorPage, AppLayout } from '@/router/constant'
 import modules from './modules'
 import { RouteRecordRaw } from 'vue-router'
+import { PageEnum } from '@/enums/pageEnum'
 
 export const RootRoute: RouteRecordRaw = {
   path: '/',
@@ -15,7 +16,7 @@ export const RootRoute: RouteRecordRaw = {
 
 export const LoginRoute: RouteRecordRaw = {
   path: '/login',
-  name: 'Login',
+  name: PageEnum.Login,
   component: () => import('@/views/basic/Login.vue'),
   meta: {
     title: '登录'

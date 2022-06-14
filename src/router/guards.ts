@@ -2,12 +2,12 @@ import { PageEnum } from '@/enums/pageEnum'
 import { isNavigationFailure, RouteLocationRaw, Router } from 'vue-router'
 import { useUserStore } from '@/store/modules/user'
 
-const whitePathList = [PageEnum.BASE_LOGIN_NAME] // no redirect whitelist
+const whitePathList = [PageEnum.Login, PageEnum.Home] // no redirect whitelist
 
 export function setupGuards(router: Router) {
   router.beforeEach(async (to, from, next) => {
-    if (from.name === PageEnum.BASE_LOGIN_NAME && to.name === 'errorPage') {
-      next(PageEnum.BASE_HOME)
+    if (from.name === PageEnum.Login && to.name === 'errorPage') {
+      next(PageEnum.Home)
       return
     }
 
@@ -26,7 +26,7 @@ export function setupGuards(router: Router) {
       }
       // redirect login page
       const redirectData: RouteLocationRaw = {
-        name: PageEnum.BASE_LOGIN_NAME,
+        name: PageEnum.Login,
         replace: true
       }
       if (to.path) {
